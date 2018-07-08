@@ -66,13 +66,15 @@ const main = () => {
             }
             else {
                 result.forEach((row, index) => {
-                    console.log(`[${index + 1}] => ${JSON.stringify(row)}`);
+                    Object.keys(row).forEach(key => {
+                        if (row[key] === '') row[key] = null;
+                    });
                     const obj = {
                         model: modelName,
                         pk: index + 1,
                         fields: row,
                     };
-                
+                    console.log(`[${index + 1}] => ${JSON.stringify(obj)}`);
                     outputArr.push(obj);
                 });
                 fs.writeFile(`./${todayString}/${todayString}-${modelName.replace(/\./, '-')}-fixture.json`, JSON.stringify(outputArr));
